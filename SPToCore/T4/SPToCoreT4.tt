@@ -53,7 +53,7 @@ namespace <#=Namespace#>.<#=SolutionDestinationFolder#>
 <#if (sp.Params.Count > 0) {#>
                 // Parameters
 <# foreach (var p in sp.Params){ #>
-                SqlParameter p_<#=p.Param#> = new SqlParameter("@<#=p.Param#>", <#=p.Param#> ?? (object)DBNull.Value);
+                SqlParameter p_<#=p.Param#> = new SqlParameter("@<#=p.Param#>", <#=p.Param#>);
                 p_<#=p.Param#>.Direction = ParameterDirection.<#=(p.isOutput ? "Output" : "Input")#>;
                 p_<#=p.Param#>.DbType = DbType.<#=p.DbType#>;
                 p_<#=p.Param#>.Size = <#=p.Length#>;
