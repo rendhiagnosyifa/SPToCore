@@ -1,7 +1,8 @@
 {
   "profiles": {
     "SPToCore": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "scan -cnn \"Persist Security Info=true;User ID=userdev;Password=1q2w3e;Initial Catalog=HeksaMasterData;Data Source=172.20.3.17\\HEKSAUATDB;Connection Timeout=200;\" -sch * -nsp HeksaMasterData.DataAccess -ctx HeksaMasterDataContext -sf Manage -pf \"C:\\Users\\Lenovo\\Documents\\TFS-HEKSA\\HeksaMasterData\\HeksaMasterData.Website\\HeksaMasterData.DataAccess\\Managed\" -f SPToCoreContext.cs"
     }
   }
 }

@@ -28,7 +28,7 @@ namespace SPToCore
         public static string P_NameSpace;
         public static string P_ContextSource;
         public static string P_Schema;
-        public static bool P_ExcludeSystemObject = true;
+        public static bool P_ExcludeSystemObject = false;
         public static string P_OutPutSolutionFolder;
         public static string P_OutPutPhysicalFolder;
         public static string P_OutPutFilename;
@@ -73,30 +73,29 @@ namespace SPToCore
 
                 var pList = new List<SpParam>();
                 foreach (DataRow par in dt_SpParam.Rows) {
-                      
-                    var _p = new SpParam() {
 
-                        Param = par["Parameter"].ToString().Replace("@",""),
-                        Type = SP_GetType(par["Type"].ToString(), (bool)par["is_nullable"]),
-                        Length = (par["Length"].GetType().Name == "DBNull" ? null : par["Length"].ToString()),
-                        Precision = (par["Precision"].GetType().Name == "DBNull" ? null : par["Precision"].ToString()),
-                        Scale = (par["Scale"].GetType().Name == "DBNull" ? null : par["Scale"].ToString()),
-                        Order = (par["Order"].GetType().Name == "DBNull" ? null : par["Order"].ToString()),
-                        isOutput = (bool)par["is_Output"],
-                        isNullable = (bool)par["is_nullable"],
-                        Collation = (par["Collation"].GetType().Name == "DBNull" ? null : par["Collation"].ToString()),
-                        DbType = SP_GetDbType(par["Type"].ToString()),
+                    var _p = new SpParam();
 
-                        sql_Param = (par["Parameter"].GetType().Name == "DBNull" ? null : par["Parameter"].ToString()),
-                        sql_Type = (par["Type"].GetType().Name == "DBNull" ? null : par["Type"].ToString()),
-                        sql_Length = (par["Length"].GetType().Name == "DBNull" ? null : par["Length"].ToString()),
-                        sql_Prec = (par["Precision"].GetType().Name == "DBNull" ? null : par["Precision"].ToString()),
-                        sql_Scale = (par["Scale"].GetType().Name == "DBNull" ? null : par["Scale"].ToString()),
-                        sql_Order = (par["Order"].GetType().Name == "DBNull" ? null : par["Order"].ToString()),
-                        sql_isOutput = (par["is_Output"].GetType().Name == "DBNull" ? null : par["is_Output"].ToString()),
-                        sql_isNullable = (par["is_nullable"].GetType().Name == "DBNull" ? null : par["is_nullable"].ToString()),
-                        sql_Collation = (par["Collation"].GetType().Name == "DBNull" ? null : par["Collation"].ToString()),
-                    };
+                    _p.Param = par["Parameter"].ToString().Replace("@", "");
+                    _p.Type = SP_GetType(par["Type"].ToString(), (bool)par["is_nullable"]);
+                    _p.Length = (par["Length"].GetType().Name == "DBNull" ? null : par["Length"].ToString());
+                    _p.Precision = (par["Precision"].GetType().Name == "DBNull" ? null : par["Precision"].ToString());
+                    _p.Scale = (par["Scale"].GetType().Name == "DBNull" ? null : par["Scale"].ToString());
+                    _p.Order = (par["Order"].GetType().Name == "DBNull" ? null : par["Order"].ToString());
+                    _p.isOutput = (bool)par["is_Output"];
+                    _p.isNullable = (bool)par["is_nullable"];
+                    _p.Collation = (par["Collation"].GetType().Name == "DBNull" ? null : par["Collation"].ToString());
+                    _p.DbType = SP_GetDbType(par["Type"].ToString());
+
+                    _p.sql_Param = (par["Parameter"].GetType().Name == "DBNull" ? null : par["Parameter"].ToString());
+                    _p.sql_Type = (par["Type"].GetType().Name == "DBNull" ? null : par["Type"].ToString());
+                    _p.sql_Length = (par["Length"].GetType().Name == "DBNull" ? null : par["Length"].ToString());
+                    _p.sql_Prec = (par["Precision"].GetType().Name == "DBNull" ? null : par["Precision"].ToString());
+                    _p.sql_Scale = (par["Scale"].GetType().Name == "DBNull" ? null : par["Scale"].ToString());
+                    _p.sql_Order = (par["Order"].GetType().Name == "DBNull" ? null : par["Order"].ToString());
+                    _p.sql_isOutput = (par["is_Output"].GetType().Name == "DBNull" ? null : par["is_Output"].ToString());
+                    _p.sql_isNullable = (par["is_nullable"].GetType().Name == "DBNull" ? null : par["is_nullable"].ToString());
+                    _p.sql_Collation = (par["Collation"].GetType().Name == "DBNull" ? null : par["Collation"].ToString());
 
                     
 
@@ -426,7 +425,7 @@ namespace SPToCore
                                                    case when system_type_id in (35, 99, 167, 175, 231, 239)  
                                                    then ServerProperty('collation') end),
                                   is_Output,
-	                              is_nullable
+	                              CAST(0 AS bit) as is_nullable
                                   from sys.parameters where object_id = object_id('{schema}.{sp}')
                                   ORDER BY parameter_id
                                 ";
